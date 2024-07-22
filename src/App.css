@@ -1,47 +1,70 @@
-.App {
+*{
+  margin: 0;
+  padding:0;
+}
+
+body{
+  background-color:aquamarine;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.App{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-color: beige;
-  background-size: cover;
-  background-position: center;
-}
-
-form {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 60%; /* Adjusted width for better layout */
-  max-width: 600px; /* Added max-width for responsiveness */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added box shadow for depth */
-  margin-top: 20px; /* Added margin top for spacing */
-}
-
-h1 {
-  color: rgb(77, 1, 77);
-  text-align: center;
-  margin-bottom: 20px; /* Added margin bottom for spacing */
-}
-
-button {
+  min-height: 500px;
   width: 100%;
+  padding-right: 50px;
+}
+
+input{
+  width:400px;
   height: 50px;
-  padding: 10px;
+  background-color:aqua;
   border: none;
-  background-color: darkgreen;
-  color: whitesmoke;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 18px;
-  cursor: pointer;
-  margin-top: 15px;
+  padding-left: 15px;
+  margin-top: 5px;
+  display:flex;
+ 
 }
 
-/* Added missing .black class */
-.black {
-  width: 100%;
-  min-height: 100vh;
-  background-color: black;
+
+button{
+  width:300px;
+  height: 30px;
+  margin-left:45px;
+  margin-top: 45px;
+  background-color:beige;
+  border: none;
+}
+
+p{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  background-color:beige;
+  height: 5vh;
+  justify-content: center;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+ 
+}
+
+h2{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(246, 241, 242);
+  margin-top: 12px;
+}
+
+h1{
+  background-color: rgb(247, 242, 244);
+  font-weight: 200;
+  font-size: 30px;
+  text-align: center;
+  margin:15px;
+  padding:15px;
 }
