@@ -1,0 +1,56 @@
+/* login.css */
+body, html {
+    height: 100%; /* Ensure the body and html take the full height */
+    margin: 0; /* Remove default margin */
+}
+
+.login-container {
+    width: 400px; /* Set a fixed width for the container */
+    margin: 0 auto; /* Center the container horizontally */
+    padding: 20px; /* Add some padding */
+    border: 1px solid #ccc; /* Border styling */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    background-color: #f9f9f9; /* Background color */
+}
+
+.login-container h2 {
+    text-align: center; /* Center the heading */
+}
+
+.login-form {
+    display: flex; /* Flexbox for layout */
+    flex-direction: column; /* Vertical stacking */
+}
+
+.login-input,
+.login-select {
+    margin: 10px 0; /* Vertical spacing between inputs */
+    padding: 10px; /* Padding inside inputs */
+    border: 1px solid #ccc; /* Border styling */
+    border-radius: 4px; /* Rounded corners */
+}
+
+.login-button {
+    padding: 10px; /* Padding inside button */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #007bff; /* Primary button color */
+    color: white; /* Text color */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.login-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.error-message {
+    color: red; /* Style for error messages */
+    text-align: center; /* Center the error message */
+    margin: 10px 0; /* Vertical spacing */
+}
+
+.register-link {
+    margin-top: 10px; /* Space above the register link */
+    text-align: center; /* Center the link text */
+}

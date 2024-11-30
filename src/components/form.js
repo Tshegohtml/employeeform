@@ -1,23 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import "./form.css";
+
 
 function Form() {
-  const [filteredEmployees, setFilteredEmployees] = useState([]);
   const [employees, setEmployees] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
   const [newEmployee, setNewEmployee] = useState({
     name: '',
     gender: '',
     email: '',
     phone: '',
-    image: '',
     position: '',
     id: ''
   });
   const [isEditing, setIsEditing] = useState(false);
   const [currentEmployeeId, setCurrentEmployeeId] = useState('');
   const [error, setError] = useState('');
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(true);
   const [showList, setShowList] = useState(false);
+
+  // Load employees from local storage on component mount
+  useEffect(() => {
+    const storedEmployees = JSON.parse(localStorage.getItem('employees')) || [];
+    setEmployees(storedEmployees);
+  }, []);
+
+  // Save employees to local storage whenever the employees state changes
+  useEffect(() => {
+    localStorage.setItem('employees', JSON.stringify(employees));
+  }, [employees]);
 
   const validateInputs = () => {
     if (!newEmployee.name) return 'Name is required.';
@@ -40,7 +50,7 @@ function Form() {
       return;
     }
     setEmployees([...employees, newEmployee]);
-    resetForm();
+    resetForm();  // Keep the form visible to add more employees
     alert('Employee successfully added');
   };
 
@@ -50,7 +60,6 @@ function Form() {
       gender: '',
       email: '',
       phone: '',
-      image: '',
       position: '',
       id: ''
     });
@@ -77,6 +86,7 @@ function Form() {
     }
     setEmployees(employees.map(employee => (employee.id === currentEmployeeId ? newEmployee : employee)));
     resetForm();
+    alert('Employee information updated successfully!');
   };
 
   const handleSubmit = () => {
@@ -87,32 +97,17 @@ function Form() {
     }
   };
 
-  const handleSearch = () => {
-    setFilteredEmployees(employees.filter(employee => employee.name.includes(searchQuery) || employee.id.includes(searchQuery)));
-  };
-
-  const handleShowForm = () => {
-    setShowForm(true);
-    setShowList(false);
-  };
-
-  const handleShowList = () => {
-    setShowForm(false);
-    setShowList(true);
-  };
-
   return (
     <div className="App">
       <h1>EMPLOYEE FORM</h1>
 
-      <div>
-        <button className="navButton" onClick={handleShowForm}>Show Employee Form</button>
-        <button className="navButton" onClick={handleShowList}>Show Employee List</button>
+      <div className="buttonContainer">
+        <button className="navButton" onClick={() => setShowForm(true)}>Show Employee Form</button>
+        <button className="navButton" onClick={() => setShowList(true)}>Show Employee List</button>
       </div>
 
       {showForm && (
-        <div>
-          {/* <h2>{isEditing ? 'Edit Employee' : 'Add Employee'}</h2> */}
+        <div className='employeeform-container'>
           <input
             type="text"
             placeholder="Name"
@@ -130,12 +125,6 @@ function Form() {
             placeholder="Phone number"
             value={newEmployee.phone}
             onChange={(e) => setNewEmployee({ ...newEmployee, phone: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="Nationality"
-            value={newEmployee.nationality}
-            onChange={(e) => setNewEmployee({ ...newEmployee, nationality: e.target.value })}
           />
           <select
             value={newEmployee.gender}
@@ -157,8 +146,10 @@ function Form() {
             value={newEmployee.id}
             onChange={(e) => setNewEmployee({ ...newEmployee, id: e.target.value })}
           />
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-          <button className="formButton" onClick={handleSubmit}>{isEditing ? 'Update Employee' : 'Add Employee'}</button>
+          {error && <p className="error">{error}</p>}
+          <button className="formButton" onClick={handleSubmit}>
+            {isEditing ? 'Update Employee' : 'Add Employee'}
+          </button>
           {isEditing && <button className="formButton" onClick={resetForm}>Cancel</button>}
         </div>
       )}
@@ -166,30 +157,23 @@ function Form() {
       {showList && (
         <div>
           <h2>Employee List</h2>
-          <input
-            type="text"
-            placeholder="Search by ID"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <button onClick={handleSearch}>Search</button>
           {employees.length === 0 ? (
             <p>No employees have been added.</p>
           ) : (
-            employees
-              .filter(employee => employee.id.includes(searchQuery))
-              .map(employee => (
-                <div className='info' key={employee.id}>
+            <div className="employeeContainer">
+              {employees.map(employee => (
+                <div className="employeeCard" key={employee.id}>
                   <p>Name: {employee.name}</p>
                   <p>Email: {employee.email}</p>
                   <p>Gender: {employee.gender}</p>
                   <p>Phone: {employee.phone}</p>
                   <p>Position: {employee.position}</p>
                   <p>ID: {employee.id}</p>
-                  <button className="listButton" onClick={() => deleteEmployee(employee.id)}>Delete</button>
                   <button className="listButton" onClick={() => editEmployee(employee)}>Edit</button>
+                  <button className="listButton" onClick={() => deleteEmployee(employee.id)}>Delete</button>
                 </div>
-              ))
+              ))}
+            </div>
           )}
         </div>
       )}
